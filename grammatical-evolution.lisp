@@ -23,9 +23,9 @@
 ;; problem, but whereas GP evolves program trees directly, GE evolves
 ;; genotypes which are then used to produce phenotypes which are then
 ;; tested for fitness.  To support GE, we therefore need our existing
-;; GA tools from ga.el, a grammar designed for our specific problem
-;; domain, and a new genotype->phenotype operation which is defined
-;; here in ge.el.
+;; GA tools from genetic-algorithm.lisp, a grammar designed for our
+;; specific problem domain, and a new genotype->phenotype operation
+;; which is defined here in grammatical-evolution.lisp.
 ;;
 ;; GRAMMARS
 ;;
