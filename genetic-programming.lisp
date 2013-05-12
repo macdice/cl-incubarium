@@ -65,7 +65,8 @@
 ;;        compute-bound work like this
 ;;
 ;; 2013 - ported it back to Common Lisp on a long train trip; I like
-;;        circles
+;;        circles; this time around I am experimenting with
+;;        implementing GP as a special case of GA
 
 ;;; Code:
 
@@ -221,5 +222,3 @@ on the type of the min and max constants provided."
                                          (declare (ignore program))
                                          1))
                '((x . 1) (y . 42))))
-
-;;; gp.el ends here
