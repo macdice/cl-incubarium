@@ -177,7 +177,7 @@ to make up the remainder."
   (let* ((vec (make-array (length population) :initial-contents population))
          (size (length vec))
          (crossovers (quantise (* size crossover-probability) 2))
-         (mutations (max (- size crossovers) 
+         (mutations (min (- size crossovers) 
                          (floor (* size mutation-probability))))
          (copies (- size crossovers mutations)))
     (labels ((winner ()
@@ -187,7 +187,7 @@ to make up the remainder."
                         (individual-fitness individual-2))
                      individual-1
                      individual-2))))
-      (append (loop repeat crossovers append
+      (append (loop repeat (/ crossovers 2) append
                       (multiple-value-bind (a b)
                           (funcall crossover-function 
                                    (individual-genotype (winner))
