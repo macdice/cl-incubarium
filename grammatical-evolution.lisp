@@ -69,14 +69,17 @@
     (and (char= (elt name 0) #\<)
          (char= (elt name (- (length name) 1)) #\>))))
 
+(defun pipe-p (value)
+  "Test is VALUE is a pipe character in any package."
+  (and (symbolp value)
+       (string= (symbol-name value) "|")))
+
 (defun expand-choice (clause codon allow-growth-p)
   "Given CLAUSE of options like (x | y | z ...), map CODON to an option.
 If ALLOW-GROWTH-P is true, then allow choices which generate a
 form which expands to a level output; otherwise, allow only atoms, to prevent
 further growth (unless all possible expansions are grown forms)."
-  (let ((choices (remove-if (lambda (symbol)
-                              (string= (symbol-name symbol) "|"))
-                            clause)))
+  (let ((choices (remove-if #'pipe-p clause)))
     (if (or allow-growth-p (every #'consp choices))
         (nth (rem codon (length choices)) choices)
         (let ((atoms (filter (lambda (object)
@@ -112,7 +115,7 @@ total limit on the size of the generated program trees."
                  (setf codons genotype))
                (cond ((and (symbolp template)
                            (non-terminal-p template))
-                      (let* ((rule (assq template grammar)) ;; TODO fixme
+                      (let* ((rule (assoc template grammar))
                              (rhs (cddr rule))
                              (codon (pop codons)))
                         (unless rule
@@ -121,11 +124,11 @@ total limit on the size of the generated program trees."
                           (error "Syntax error: ~A" rule))
                         (render depth
                                 (cond 
-                                 ((memq '\| rhs) ;; TODO test for symbol with name "|" from any package?
+                                 ((some #'pipe-p rhs)
                                   (expand-choice rhs
                                                  codon
                                                  (< depth grow-depth)))
-                                 ((eq (first rhs) 'random)
+                                 ((eq (first rhs) :random)
                                   (expand-random rhs))
                                  ((= (length rhs) 1)
                                   (car rhs))
