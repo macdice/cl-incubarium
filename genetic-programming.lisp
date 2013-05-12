@@ -145,6 +145,7 @@ MIN-DEPTH and MAX-DEPTH (inclusive)."
   (let* ((male-index    (random (tree-size male)))
          (female-index  (random (tree-size female)))
          (male-fragment (tree-ref male male-index)))
+    ;; TODO should we return TWO combinations?
     (tree-combine female female-index male-fragment)))
 
 ;;; OPERATIONS ON POPULATIONS
