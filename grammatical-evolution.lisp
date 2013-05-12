@@ -34,8 +34,8 @@
 ;; 
 ;;   (<NAME> = VALUE)                 ;; expands to a value
 ;;   (<NAME> = (VALUE ...)            ;; expands to a form
-;;   (<NAME> = VALUE | VALUE ...)     ;; expands to a choice
-;;   (<NAME> = random min max)        ;; expands to a number in [min, max)
+;;   (<NAME> = VALUE \| VALUE ...)    ;; expands to a choice
+;;   (<NAME> = :random min max)       ;; expands to a number in [min, max)
 ;;
 ;; In all of the above cases, VALUE can be a constant number, or the
 ;; name of another production rule (indicated by a symbol enclosed in
