@@ -152,7 +152,7 @@ into the next generation verbatim."
                  individual))
            population)
    (lambda (left right)
-     (< (individual-fitness left) (individual-fitness right)))))
+     (> (individual-fitness left) (individual-fitness right)))))
 
 (defun tournament (population 
                    crossover-function
@@ -172,14 +172,14 @@ The new population will have the same number of individuals as
 the given population, and if there are not enough created by
 crossover or mutation, copies of winning individuals will be used
 to make up the remainder."
-  (when (> (+ crossover-probability mutation-probability) 1.0)
+  (when (> (+ crossover-probability mutation-probability) 1.0) ;; TODO the unpleasantness of floats
     (error "incompatible crossover-probability and mutation-probability"))
   (let* ((vec (make-array (length population) :initial-contents population))
          (size (length vec))
-         (crossovers (quantise (* size crossover-probability) 2))
-         (mutations (min (- size crossovers) 
+         (crossovers (floor (* (- size 1) crossover-probability)))
+         (mutations (min (- size crossovers 1) 
                          (floor (* size mutation-probability))))
-         (copies (- size crossovers mutations)))
+         (copies (max (- size crossovers mutations 1) 0)))
     (labels ((winner ()
                (let ((individual-1 (aref vec (random size)))
                      (individual-2 (aref vec (random size))))
@@ -187,17 +187,16 @@ to make up the remainder."
                         (individual-fitness individual-2))
                      individual-1
                      individual-2))))
-      (append (loop repeat (/ crossovers 2) append
-                      (multiple-value-bind (a b)
-                          (funcall crossover-function 
-                                   (individual-genotype (winner))
-                                   (individual-genotype (winner)))
-                        (list (make-individual :genotype a)
-                              (make-individual :genotype b))))
+      (append (loop repeat crossovers collect
+                   (make-individual 
+                    :genotype (funcall crossover-function 
+                                       (individual-genotype (winner))
+                                       (individual-genotype (winner)))))
               (loop repeat mutations collect
                     (make-individual 
                      :genotype (funcall mutation-function 
                                         (individual-genotype (winner)))))
-              (loop repeat copies collect (winner))))))
+              (loop repeat copies collect (winner))
+              (list (first population))))))
 
 ;; TODO roulette, roulette-tournament, ... ?
