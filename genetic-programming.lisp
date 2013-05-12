@@ -157,7 +157,10 @@ minimum depth of 2, whereas we have a parameter."
   (loop repeat size 
         collect
         (make-individual
-         (make-random-program functions terminals min-depth max-depth))))
+         :genotype (make-random-program functions
+                                        terminals
+                                        min-depth
+                                        max-depth))))
 
 (defun full-population (size functions terminals depth)
   "Generate a population of random individuals using the 'full' method.
@@ -177,9 +180,15 @@ so we try everything.  See Koza92 6.2 p92."
         as depth = (+ min-depth (rem (/ count 2) (- max-depth min-depth)))
         collect
         (make-individual
-         (case (rem count 2)
-           ((0) (make-random-program functions terminals min-depth depth))
-           ((1) (make-random-program functions terminals depth depth))))))
+         :genotype (case (rem count 2)
+                     ((0) (make-random-program functions
+                                               terminals
+                                               min-depth
+                                               depth))
+                     ((1) (make-random-program functions
+                                               terminals
+                                               depth
+                                               depth))))))
 
 ;;; UTILITIES
 
