@@ -105,34 +105,22 @@ kept from each chromosome."
 
 (defun make-single-point-mutator (min-value max-value)
   "Make a function to randomise one integer to [MIN-VALUE, MAX-VALUE)."
-  (let ((min-value min-value)
-        (max-value max-value))
-    (lambda (genotype)
-      (let ((point (random (length genotype))))
-        (append (take genotype point)
-                (list (+ min-value (random (- max-value min-value))))
-                (drop genotype (1+ point)))))))
+  (lambda (genotype)
+    (let ((point (random (length genotype))))
+      (append (take genotype point)
+              (list (+ min-value (random (- max-value min-value))))
+              (drop genotype (1+ point))))))
 
 ;; TODO
 ;; * more kinds of mutation, support for real values etc
 ;; * element swapping, ...
 
-;; OPERATIONS ON INDIVIDUALS (GENOTYPE/FITNESS PAIRS)
+;; INDIVIDUALS
 
-(defun make-individual (genotype &optional fitness)
-  "Construct an individual from GENOTYPE and FITNESS."
-  ;; we just use pairs to hold genotype/fitness for now
-  ;; TODO is there any point in defining a struct for this?
-  ;; I like the simplicity of the pair-based approach
-  (cons genotype fitness))
-
-(defun individual-genotype (individual)
-  "Return the genotype component of INDIVIDUAL."
-  (car individual))
-
-(defun individual-fitness (individual)
-  "Return the fitness component of INDIVIDUAL."
-  (cdr individual))
+(defstruct individual
+  "A record type to hold a genotype and the fitness, if known."
+  (genotype)
+  (fitness))
 
 ;;; OPERATIONS ON POPULATIONS OF INDIVIDUALS
 
@@ -142,8 +130,10 @@ The result is a list of SIZE lists, each of which is randomly
 created with values from the interval [MIN-VALUE, MAX-VALUE), and
 sizes from the interval [MIN-SIZE, MAX-SIZE)."
   (loop repeat size collect
-        (make-individual
-         (make-random-genotype min-value max-value min-size max-size))))
+        (make-individual :genotype (make-random-genotype min-value
+                                                         max-value
+                                                         min-size
+                                                         max-size))))
 
 (defun evaluate-population (population fitness-function)
   "Evaluate POPULATION assigning a fitnesses using FITNESS-FUNCTION.
@@ -156,10 +146,9 @@ into the next generation verbatim."
   (non-destructive-sort
    (mapcar (lambda (individual)
              (if (null (individual-fitness individual))
-                 (make-individual 
-                  (individual-genotype individual)
-                  (funcall fitness-function 
-                           (individual-genotype individual)))
+                 (make-individual :genotype (individual-genotype individual)
+                                  :fitness (funcall fitness-function 
+                                                    (individual-genotype individual)))
                  individual))
            population)
    (lambda (left right)
@@ -203,12 +192,12 @@ to make up the remainder."
                           (funcall crossover-function 
                                    (individual-genotype (winner))
                                    (individual-genotype (winner)))
-                        (list (make-individual a)
-                              (make-individual b))))
+                        (list (make-individual :genotype a)
+                              (make-individual :genotype b))))
               (loop repeat mutations collect
                     (make-individual 
-                     (funcall mutation-function 
-                              (individual-genotype (winner)))))
+                     :genotype (funcall mutation-function 
+                                        (individual-genotype (winner)))))
               (loop repeat copies collect (winner))))))
 
 ;; TODO roulette, roulette-tournament, ... ?
