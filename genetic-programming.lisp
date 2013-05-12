@@ -185,7 +185,7 @@ so we try everything.  See Koza92 6.2 p92."
 
 (defun pick-terminal (terminals)
   "Randomly pick a terminal from TERMINALS, generating any random values.
-Terminals can be numbers, symbols, or lists of the form (random
+Terminals can be numbers, symbols, or lists of the form (:RANDOM
 <min> <max>) which generate a random number in the interval [min,
 max).  The random number will be an integer or a float depending
 on the type of the min and max constants provided."
