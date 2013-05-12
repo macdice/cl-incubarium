@@ -112,7 +112,7 @@ total limit on the size of the generated program trees."
                  (setf codons genotype))
                (cond ((and (symbolp template)
                            (non-terminal-p template))
-                      (let* ((rule (assq template grammar))
+                      (let* ((rule (assq template grammar)) ;; TODO fixme
                              (rhs (cddr rule))
                              (codon (pop codons)))
                         (unless rule
@@ -121,12 +121,12 @@ total limit on the size of the generated program trees."
                           (error "Syntax error: ~A" rule))
                         (render depth
                                 (cond 
-                                 ((memq '| rhs)
-                                  (ge-expand-choice rhs
-                                                    codon
-                                                    (< depth grow-depth)))
+                                 ((memq '\| rhs) ;; TODO test for symbol with name "|" from any package?
+                                  (expand-choice rhs
+                                                 codon
+                                                 (< depth grow-depth)))
                                  ((eq (first rhs) 'random)
-                                  (ge-expand-random rhs))
+                                  (expand-random rhs))
                                  ((= (length rhs) 1)
                                   (car rhs))
                                  (t
@@ -138,4 +138,4 @@ total limit on the size of the generated program trees."
                      (t template))))
       (render 0 (first (first grammar))))))
 
-;;; ge.el ends here
+;; TODO finish porting the above function from Emacs Lisp!  Decide how to handle | symbols, and use assoc/member rather an assq/memq
