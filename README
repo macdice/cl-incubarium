@@ -6,7 +6,9 @@ implementations of AI smash hits from the 70s, 80s and 90s, which I am
 developing for educational purposes.
 
 These are intended to be simple and clear, not efficient or complete!
-I intent to study the relationship between the various techniques by
-sharing code between the algorithms.
+I intend to study the relationship between the various techniques by
+sharing code between the algorithms... so genetic-programming.lisp and
+grammatical-evolution.lisp reuse algorithms from
+genetic-algorithm.lisp.
 
 Status: work in progress, not currently in a useful state
