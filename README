@@ -5,4 +5,8 @@ Exercises in artificial intelligence hacking.  These are my own toy
 implementations of AI smash hits from the 70s, 80s and 90s, which I am
 developing for educational purposes.
 
-Status: incomplet, inkorrect.
+These are intended to be simple and clear, not efficient or complete!
+I intent to study the relationship between the various techniques by
+sharing code between the algorithms.
+
+Status: work in progress
