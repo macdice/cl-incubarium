@@ -85,11 +85,12 @@ as illustrated:
   Child 1: (1 0|1 1)   --- head of male, tail of female
   Child 2: (0 0 0|1 1 1) - head of female, tail of male
 
-It does not matter if the two chromosomes are of different
-lengths, and the child chromosomes can be of any length from two
-to the combined length of MALE and FEMALE minus two."
-  (let ((male-point (1+ (random (- (length male) 2))))
-        (female-point (1+ (random (- (length female) 2)))))
+It does not matter if the two chromosomes are of different lengths,
+and the child chromosomes can be of any length from two to the
+combined length of MALE and FEMALE minus two (since at least one
+element is kept from each chromosome)."
+  (let ((male-point (1+ (random (- (length male) 1))))
+        (female-point (1+ (random (- (length female) 1)))))
     (values (append (take male male-point) (drop female female-point))
             (append (take female female-point) (drop male male-point)))))
 
