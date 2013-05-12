@@ -89,7 +89,7 @@ further growth (unless all possible expansions are grown forms)."
           (nth (rem codon (length atoms)) atoms)))))
 
 (defun expand-random (clause)
-  "Given CLAUSE like (random <min> <max>), pick a number in [min, max)."
+  "Given CLAUSE like (:random <min> <max>), pick a number in [min, max)."
   (unless (and (= (length clause) 3)
                (numberp (second clause))
                (numberp (third clause)))
@@ -140,5 +140,3 @@ total limit on the size of the generated program trees."
                             (render (1+ depth) element)))
                      (t template))))
       (render 0 (first (first grammar))))))
-
-;; TODO finish porting the above function from Emacs Lisp!  Decide how to handle | symbols, and use assoc/member rather an assq/memq
