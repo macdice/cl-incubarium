@@ -70,7 +70,7 @@ set of 5 data points."
      then (evaluate-population
            (tournament population
                        #'tree-random-recombine
-                       0.5
+                       0.9
                        #'identity
                        0.0)
            #'gp-example-polynomial-fitness)
