@@ -63,9 +63,10 @@ illustrated:
   Child 2: (0 0|1 1 1) --- head of female, tail of male
                |
 
-This operation works best if MALE and FEMALE are of the same
-length, but it can handle geotypes of differing lengths.  The two
-children are returned as a multiple values."
+This operation works best if MALE and FEMALE are of the same length,
+but it can handle geotypes of differing lengths.  The two children are
+returned as a multiple values.  Always takes at least one element from
+each chromosome."
   (let ((point (1+ (random (- (max (length male) (length female)) 1)))))
     (values (append (take male point) (drop female point))
             (append (take female point) (drop male point)))))
@@ -87,8 +88,8 @@ as illustrated:
 
 It does not matter if the two chromosomes are of different lengths,
 and the child chromosomes can be of any length from two to the
-combined length of MALE and FEMALE minus two (since at least one
-element is kept from each chromosome)."
+combined length of MALE and FEMALE minus two.  At least one element is
+kept from each chromosome."
   (let ((male-point (1+ (random (- (length male) 1))))
         (female-point (1+ (random (- (length female) 1)))))
     (values (append (take male male-point) (drop female female-point))
