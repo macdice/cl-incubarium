@@ -66,7 +66,7 @@ illustrated:
 This operation works best if MALE and FEMALE are of the same
 length, but it can handle geotypes of differing lengths.  The two
 children are returned as a multiple values."
-  (let ((point (1+ (random (- (max (length male) (length female)) 2)))))
+  (let ((point (1+ (random (- (max (length male) (length female)) 1)))))
     (values (append (take male point) (drop female point))
             (append (take female point) (drop male point)))))
 
