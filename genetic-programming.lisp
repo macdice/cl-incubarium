@@ -1,21 +1,3 @@
-;;; genetic-programming.lisp --- Toy genetic programming library
-;; Copyright (c) 2010-2013 Thomas Munro <munro@ip9.org>
-
-;; This program is free software: you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-;;; Commentary:
-;; 
 ;; A toy GP system.  The algorithms here are purely function (ie they
 ;; do not use assignment).  Maybe that makes a couple of things a
 ;; little bit harder to read, I haven't decided (this is a legacy of
@@ -27,7 +9,7 @@
 ;; genetic-algorithm.lisp.  Genetic programming is a special case of
 ;; the genetic algorithm where genotypes are identical to phenotypes,
 ;; that is, the genotypes are the program trees we want to produce.
-;; We need to replace a couple of parts of genetic-programming.lisp to
+;; We need to replace a couple of parts of genetic-algorithm.lisp to
 ;; achieve this:
 ;;
 ;; * instead of make-random-genotype, we have
@@ -48,27 +30,9 @@
 ;; functions for genetic programming.
 ;;
 ;; REFERENCES
-;; - http://en.wikipedia.org/wiki/Genetic_programming
-;; - Genetic Programming, John Koza, 1992
-
-;;; History:
-;; 
-;; 2005 - wrote this code in Scheme, the sweetest Lisp of them all
 ;;
-;; 2008 - rewrote it in Common Lisp, the fastest Lisp (SBCL wins all
-;;        my genetic programming drag-races)
-;;
-;; 2010 - rewrote it in Emacs Lisp for a laugh because it is an old
-;;        faithful friend, it's the only Lisp that I can truly depend
-;;        on in this mean and nasty world, even though it's as slow as
-;;        a wet week and it's completely inappropriate for
-;;        compute-bound work like this
-;;
-;; 2013 - ported it back to Common Lisp on a long train trip; I like
-;;        circles; this time around I am experimenting with
-;;        implementing GP as a special case of GA
-
-;;; Code:
+;; * http://en.wikipedia.org/wiki/Genetic_programming
+;; * Genetic Programming, John Koza, 1992
 
 (in-package :incubarium)
 

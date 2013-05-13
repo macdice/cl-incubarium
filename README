@@ -1,6 +1,8 @@
 cl-incubarium
 =============
 
+(c) 2013 Thomas Munro <munro@ip9.org>
+
 Exercises in artificial intelligence hacking.  These are my own toy
 implementations of AI smash hits from the 70s, 80s and 90s, which I am
 developing for educational purposes.

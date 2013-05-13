@@ -1,35 +1,13 @@
-;;; genetic-algorithm.lisp --- Toy genetic algorithm library
-;; Copyright (c) 2010-2013 Thomas Munro <munro@ip9.org>
+;; This is a toy genetic algorithm system.  It is uses lists for
+;; genomes and populations, so it is probably not very efficient!
+;; Both could probably be represented by arrays and modified in place.
 
-;; This program is free software: you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
-
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-;;; Commentary:
-;;
-;; Educational excercises to learn about basic genetic algorithm
-;; programming.
-;;
 ;; REFERENCES
 ;;
 ;; * http://en.wikipedia.org/wiki/Genetic_algorithm
 ;; * http://en.wikipedia.org/wiki/Crossover_(genetic_algorithm)
 
-;;; History:
-;; 
-
 (in-package :incubarium)
-
-;;; Code:
 
 ;;; OPERATIONS ON GENOTYPES
 
@@ -204,3 +182,4 @@ remainder."
               (list (first population))))))
 
 ;; TODO roulette, roulette-tournament, ... ?
+ 
