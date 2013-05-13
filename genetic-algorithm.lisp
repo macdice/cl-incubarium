@@ -176,7 +176,7 @@ to make up the remainder."
     (error "incompatible crossover-probability and mutation-probability"))
   (let* ((vec (make-array (length population) :initial-contents population))
          (size (length vec))
-         (crossovers (floor (* (- size 1) crossover-probability)))
+         (crossovers (quantise (* (- size 1) crossover-probability) 2))
          (mutations (min (- size crossovers 1) 
                          (floor (* size mutation-probability))))
          (copies (max (- size crossovers mutations 1) 0)))
@@ -187,11 +187,13 @@ to make up the remainder."
                         (individual-fitness individual-2))
                      individual-1
                      individual-2))))
-      (append (loop repeat crossovers collect
-                   (make-individual 
-                    :genotype (funcall crossover-function 
-                                       (individual-genotype (winner))
-                                       (individual-genotype (winner)))))
+      (append (loop repeat (/ crossovers 2) append
+                   (multiple-value-bind (offspring-1 offspring-2)
+                       (funcall crossover-function 
+                                (individual-genotype (winner))
+                                (individual-genotype (winner)))
+                     (list (make-individual :genotype offspring-1)
+                           (make-individual :genotype offspring-2))))
               (loop repeat mutations collect
                     (make-individual 
                      :genotype (funcall mutation-function 
