@@ -158,20 +158,22 @@ into the next generation verbatim."
                    crossover-function
                    crossover-probability
                    mutation-function
-                   mutation-probability)
+                   mutation-probability
+                   tournament-size)
   "Use tournament selection to select and breed a new generation.
 Random pairs of individuals are selected from POPULATION.
-CROSSOVER-FUNCTION must take two individual genotypes and return
-two children (by multiple value return).  CROSSOVER-PROBABILITY
-is the proportion of the resulting population that will be
-created by crossover.  MUTATION-FUNCTION should be a function
-taking one genotype, and return a mutated genotype.
-MUTATION-PROBABILITY is the proportion of the resulting
-population that will be created by mutating existing individuals.
-The new population will have the same number of individuals as
-the given population, and if there are not enough created by
-crossover or mutation, copies of winning individuals will be used
-to make up the remainder."
+CROSSOVER-FUNCTION must take two individual genotypes and return two
+children (by multiple value return).  CROSSOVER-PROBABILITY is the
+proportion of the resulting population that will be created by
+crossover.  MUTATION-FUNCTION should be a function taking one
+genotype, and return a mutated genotype.  MUTATION-PROBABILITY is the
+proportion of the resulting population that will be created by
+mutating existing individuals.  TOURNAMENT-SIZE is the number of
+individuals to select at random for each tournament.  The new
+population will have the same number of individuals as the given
+population, and if there are not enough created by crossover or
+mutation, copies of winning individuals will be used to make up the
+remainder."
   (when (> (+ crossover-probability mutation-probability) 1.0) ;; TODO the unpleasantness of floats
     (error "incompatible crossover-probability and mutation-probability"))
   (let* ((vec (make-array (length population) :initial-contents population))
@@ -181,12 +183,14 @@ to make up the remainder."
                          (floor (* size mutation-probability))))
          (copies (max (- size crossovers mutations 1) 0)))
     (labels ((winner ()
-               (let ((individual-1 (aref vec (random size)))
-                     (individual-2 (aref vec (random size))))
-                 (if (> (individual-fitness individual-1)
-                        (individual-fitness individual-2))
-                     individual-1
-                     individual-2))))
+               (first
+                (sort
+                 (loop 
+                    repeat tournament-size
+                    collect (aref vec (random size)))
+                 (lambda (a b)
+                   (> (individual-fitness a)
+                      (individual-fitness b)))))))
       (append (loop repeat (/ crossovers 2) append
                    (multiple-value-bind (offspring-1 offspring-2)
                        (funcall crossover-function 

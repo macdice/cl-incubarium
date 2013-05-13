@@ -11,22 +11,25 @@
   ;; solution is (0 0 0 0 0 0 0 0), and we have to figure that out
   ;; using GA.  Usually seems to converge on the best solution in
   ;; under 10 generations.
-  (loop repeat 10
-        for population = (evaluate-population
-                          (make-population 10 0 2 8 8)
-                          #'ga-example-onemax-fitness)
-        then (evaluate-population
-              (tournament population
-                          #'one-point-crossover
-                          0.8
-                          (make-single-point-mutator 0 2)
-                          0.2)
-              #'ga-example-onemax-fitness)
-        do (format t "best = ~A, fitness = ~a, worst = ~A, fitness = ~a~%"
-                   (individual-genotype (first population))
-                   (individual-fitness (first population))
-                   (individual-genotype (car (last population)))
-                   (individual-fitness (car (last population))))))
+  (loop 
+     repeat 10
+     for population = (evaluate-population
+                       (make-population 10 0 2 8 8)
+                       #'ga-example-onemax-fitness)
+     then (evaluate-population
+           (tournament population
+                       #'one-point-crossover
+                       0.8
+                       (make-single-point-mutator 0 2)
+                       0.2
+                       2)
+           #'ga-example-onemax-fitness)
+     do (format t "best = ~A, fitness = ~a, worst = ~A, fitness = ~a~%"
+                (individual-genotype (first population))
+                (individual-fitness (first population))
+                (individual-genotype (car (last population)))
+                (individual-fitness (car (last population))))
+     while (< (individual-fitness (first population)) 8)))
 
 (defun square (x)
   (* x x))
@@ -72,7 +75,8 @@ set of 5 data points."
                        #'tree-random-recombine
                        0.9
                        #'identity
-                       0.0)
+                       0.0
+                       3)
            #'gp-example-polynomial-fitness)
      do (format t "generation = ~a, best = ~a, fitness = ~a~%"
                 generation
