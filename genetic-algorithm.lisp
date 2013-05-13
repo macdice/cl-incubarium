@@ -174,8 +174,6 @@ population will have the same number of individuals as the given
 population, and if there are not enough created by crossover or
 mutation, copies of winning individuals will be used to make up the
 remainder."
-  (when (> (+ crossover-probability mutation-probability) 1.0) ;; TODO the unpleasantness of floats
-    (error "incompatible crossover-probability and mutation-probability"))
   (let* ((vec (make-array (length population) :initial-contents population))
          (size (length vec))
          (crossovers (quantise (* (- size 1) crossover-probability) 2))
