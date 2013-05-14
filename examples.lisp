@@ -84,4 +84,17 @@ set of 5 data points."
                 (individual-fitness (first population)))
      while (< (individual-fitness (first population)) 0.9999)))
   
-  
+(defun nn-example-xor ()
+  "Learn the XOR function by example."
+  (let ((network (create-neural-network 2 2 1))
+        (training-data '((#(0.0d0 0.0d0) #(0.0d0))
+                         (#(0.0d0 1.0d0) #(1.0d0))
+                         (#(1.0d0 0.0d0) #(1.0d0))
+                         (#(1.0d0 1.0d0) #(0.0d0)))))
+    ;; train it using the stimulus/reponse data
+    (train-neural-network! network training-data)
+    ;; show the results
+    (loop for (input expected) in training-data do
+          (format t "~A -> ~A~%"
+                   input
+                   (update-neural-network! network input)))))
