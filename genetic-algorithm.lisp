@@ -1,3 +1,6 @@
+;;; INCUBARIUM
+;; (c) 2010-2013 Thomas Munro <munro@ip9.org>
+
 ;; This is a toy genetic algorithm system.  It is uses lists for
 ;; genomes and populations, so it is probably not very efficient!
 ;; Both could probably be represented by arrays and modified in place.

@@ -1,3 +1,6 @@
+;;; INCUBARIUM
+;; (c) 2010-2013 Thomas Munro <munro@ip9.org>
+
 ;; A toy GP system.  The algorithms here are purely function (ie they
 ;; do not use assignment).  Maybe that makes a couple of things a
 ;; little bit harder to read, I haven't decided (this is a legacy of

@@ -1,3 +1,6 @@
+;;; INCUBARIUM
+;; (c) 2010-2013 Thomas Munro <munro@ip9.org>
+
 ;; Grammatical evolution[1] is based on standard GA techniques:
 ;; genotypes are strings of numbers, and the usual GA operations such
 ;; as crossover, mutation, and tournament selection are used.  It is
